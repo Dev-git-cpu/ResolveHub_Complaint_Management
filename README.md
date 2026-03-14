@@ -26,11 +26,3 @@ Backend
 
 Database
 - MySQL
-
-## 📸 Screenshots
-
-Add dashboard screenshots here.
-
-## ⚙️ Installation
-
-### Backend
