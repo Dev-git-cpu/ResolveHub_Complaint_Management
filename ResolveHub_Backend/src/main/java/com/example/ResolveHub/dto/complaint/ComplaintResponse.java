@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 public class ComplaintResponse {
 
     private Long id;
+    private String name;
     private ComplaintCategory category;
     private String title;
     private String description;

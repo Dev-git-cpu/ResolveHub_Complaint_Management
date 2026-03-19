@@ -66,6 +66,7 @@ public class ComplaintServiceImpl implements ComplaintService {
         ComplaintResponse response = new ComplaintResponse();
 
         response.setId(complaint.getId());
+        response.setName((complaint.getUser().getName()));
         response.setCategory(complaint.getCategory());
         response.setTitle(complaint.getTitle());
         response.setDescription(complaint.getDescription());

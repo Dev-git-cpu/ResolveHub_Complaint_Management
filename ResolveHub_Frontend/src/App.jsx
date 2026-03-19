@@ -1,8 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import LandingPage from "./pages/LandingPage";
 import Login from "./pages/auth/Login";
 import Signup from "./pages/auth/Signup";
-import Dashboard from "./pages/Dashboard/Dashboard";
+import Dashboard from "./pages/dashboard/Dashboard";
 import AdminDashboard from "./pages/dashboard/AdminDashboard";
 import AdminComplaints from "./pages/dashboard/AdminComplaints";
 import AdminUserComplaints from "./pages/dashboard/AdminUserComplaints";
@@ -22,11 +23,11 @@ function App() {
 
         <Route path="/dashboard" element={<PrivateRoute> <Dashboard /></PrivateRoute>} />
 
-        <Route path="/admin" element={<PrivateRoute><AdminDashboard /></PrivateRoute>} />
+        <Route path="/admin" element={<PrivateRoute role="ADMIN"><AdminDashboard /></PrivateRoute>} />
 
-        <Route path="/admin/complaints" element={<PrivateRoute><AdminComplaints /></PrivateRoute>} />
+        <Route path="/admin/complaints" element={<PrivateRoute role="ADMIN"><AdminComplaints /></PrivateRoute>} />
 
-        <Route path="/admin/users" element={<PrivateRoute><AdminUserComplaints /></PrivateRoute>} />
+        <Route path="/admin/users" element={<PrivateRoute role="ADMIN"><AdminUserComplaints /></PrivateRoute>} />
 
       </Routes>
 

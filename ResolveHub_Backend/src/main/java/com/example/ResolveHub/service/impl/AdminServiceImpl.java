@@ -4,8 +4,10 @@ import com.example.ResolveHub.dto.complaint.ComplaintResponse;
 import com.example.ResolveHub.dto.complaint.ComplaintUpdateDto;
 import com.example.ResolveHub.dto.complaint.ComplaintUpdateResponse;
 import com.example.ResolveHub.entity.Complaint;
+import com.example.ResolveHub.entity.User;
 import com.example.ResolveHub.exception.ResourceNotFoundException;
 import com.example.ResolveHub.repository.ComplaintRepository;
+import com.example.ResolveHub.repository.UserRepository;
 import com.example.ResolveHub.service.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -15,12 +17,14 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Service
 @RequiredArgsConstructor
 public class AdminServiceImpl implements AdminService {
     private final ComplaintRepository complaintRepository;
+    private final UserRepository userRepository;
 
 
     @Override
@@ -53,6 +57,11 @@ public class AdminServiceImpl implements AdminService {
         complaintRepository.save(complaint);
 
         return mapToUpdateResponse(complaint);
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 
     private ComplaintResponse mapToResponse(Complaint complaint){

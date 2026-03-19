@@ -77,6 +77,7 @@ public class AuthServiceImpl implements AuthService {
                 user.getId(),
                 user.getName(),
                 token,
+                user.getRole(),
                 "Login successfully"
 
         );

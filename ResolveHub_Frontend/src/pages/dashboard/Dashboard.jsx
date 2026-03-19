@@ -25,26 +25,20 @@ const Dashboard = () => {
 
   // FETCH COMPLAINTS
   const fetchComplaints = async () => {
-
     if (!userId) {
       toast.error("User not logged in");
-      navigate("/",{replace:true});
+      navigate("/", { replace: true });
       return;
     }
 
     try {
-
       const res = await axios.get(
         `http://localhost:8080/complaints/user/${userId}`
       );
-
       setComplaints(res.data);
-
     } catch (error) {
-
       console.error(error);
       toast.error("Failed to load complaints");
-
     }
   };
 
@@ -54,63 +48,50 @@ const Dashboard = () => {
 
   // SUBMIT COMPLAINT
   const ComplaintHandler = async () => {
-
     if (!title || !category || !description) {
       toast.warning("All fields are required");
       return;
     }
 
     try {
-
       const response = await axios.post(
         `http://localhost:8080/complaints/${userId}`,
-        {
-          title,
-          category,
-          description
-        }
+        { title, category, description }
       );
 
       console.log(response.data);
-
       toast.success("Complaint Submitted");
-
       fetchComplaints();
-
       setTitle("");
       setCategory("");
       setDescription("");
 
     } catch (error) {
-
       console.error(error);
       toast.error("Failed to submit complaint");
-
     }
   };
 
   // LOGOUT
   const handleLogout = () => {
-
     localStorage.clear();
     navigate("/");
-
   };
 
   const resolvedCount =
     complaints.filter((c) => c.status === "RESOLVED").length;
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC]">
+    <div className="min-h-screen bg-[#0f0f0f] text-gray-100">
 
       {/* Navbar */}
-      <nav className="flex justify-between items-center px-10 py-6 bg-white border-b border-gray-200">
-        <h1 className="text-3xl font-bold text-emerald-600">
+      <nav className="flex justify-between items-center px-10 py-6 bg-[#111] border-b border-emerald-900">
+        <h1 className="text-3xl font-bold text-emerald-500">
           ResolveHub
         </h1>
 
         <div className="flex gap-4">
-          <button className="px-4 py-2 bg-emerald-100 rounded-lg text-[#0F172A] cursor-pointer">
+          <button className="px-4 py-2 bg-emerald-700 rounded-lg text-white cursor-pointer">
             Profile
           </button>
 
@@ -123,60 +104,57 @@ const Dashboard = () => {
         </div>
       </nav>
 
-
       {/* Main Content */}
       <div className="grid md:grid-cols-3 gap-8 px-10 py-10">
 
         {/* Complaint Form */}
-        <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
+        <div className="bg-[#111] p-6 rounded-2xl border border-emerald-900  shadow-xl">
 
-          <h2 className="text-2xl font-semibold text-[#0F172A] mb-2">
+          <h2 className="text-2xl font-semibold text-emerald-400 mb-2">
             File a New Complaint
           </h2>
 
-          <p className="text-[#475569] mb-6">
+          <p className="text-gray-300 mb-6">
             Please provide details about your complaint. We'll review and respond promptly.
           </p>
 
           <div className="space-y-4">
 
             <div>
-              <label className="text-sm text-[#0F172A]">Complaint Title</label>
+              <label className="text-sm text-gray-300">Complaint Title</label>
               <input
                 value={title}
-                onChange={(e)=>setTitle(e.target.value)}
+                onChange={(e) => setTitle(e.target.value)}
                 type="text"
                 placeholder="Brief title of your complaint..."
-                className="w-full mt-2 bg-[#F1F5F9] border border-gray-300 rounded-lg px-4 py-2"
+                className="w-full mt-2 bg-gray-800 border border-emerald-900 rounded-lg px-4 py-2 text-white"
               />
             </div>
 
             <div>
-              <label className="text-sm text-[#0F172A]">Category</label>
+              <label className="text-sm text-gray-300">Category</label>
               <select
                 value={category}
-                onChange={(e)=>setCategory(e.target.value)}
-                className="w-full mt-2 bg-[#F1F5F9] border border-gray-300 rounded-lg px-4 py-2"
+                onChange={(e) => setCategory(e.target.value)}
+                className="w-full mt-2 bg-gray-800 border border-emerald-900 rounded-lg px-4 py-2 text-white"
               >
                 <option value="">Select a category</option>
-
-                {categories.map((cat)=>(
+                {categories.map((cat) => (
                   <option key={cat} value={cat}>
                     {cat}
                   </option>
                 ))}
-
               </select>
             </div>
 
             <div>
-              <label className="text-sm text-[#0F172A]">Description</label>
+              <label className="text-sm text-gray-300">Description</label>
               <textarea
                 value={description}
-                onChange={(e)=>setDescription(e.target.value)}
+                onChange={(e) => setDescription(e.target.value)}
                 rows="4"
                 placeholder="Provide detailed information about your complaint..."
-                className="w-full mt-2 bg-[#F1F5F9] border border-gray-300 rounded-lg px-4 py-2"
+                className="w-full mt-2 bg-gray-800 border border-emerald-900 rounded-lg px-4 py-2 text-white"
               ></textarea>
             </div>
 
@@ -190,27 +168,26 @@ const Dashboard = () => {
           </div>
         </div>
 
-
         {/* Complaint Table */}
-        <div className="md:col-span-2 bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
+        <div className="md:col-span-2 bg-[#111] p-6 rounded-2xl border border-emerald-900 shadow-sm">
 
-          <h2 className="text-2xl font-semibold text-[#0F172A] mb-2">
+          <h2 className="text-2xl font-semibold text-emerald-400 mb-2">
             My Complaints
           </h2>
 
-          <p className="text-[#475569] mb-6">
+          <p className="text-gray-300 mb-6">
             Track and manage all your submitted complaints
           </p>
 
           <input
             type="text"
             placeholder="Search complaints..."
-            className="w-full bg-[#F1F5F9] border border-gray-300 rounded-lg px-4 py-2 mb-6"
+            className="w-full bg-gray-800 border border-emerald-900 rounded-lg px-4 py-2 mb-6 text-white"
           />
 
-          <table className="w-full text-left">
+          <table className="w-full text-left text-gray-100">
 
-            <thead className="text-[#0F172A] border-b">
+            <thead className="border-b border-emerald-500">
               <tr>
                 <th className="py-2">ID</th>
                 <th className="py-2">Title</th>
@@ -221,21 +198,18 @@ const Dashboard = () => {
               </tr>
             </thead>
 
-            <tbody className="text-[#475569]">
+            <tbody>
+              {complaints.map((c) => (
+                <tr key={c.id} className="border-b border-gray-700">
 
-              {complaints.map((c)=>(
-                <tr key={c.id} className="border-b">
-
-                  <td className="py-3 text-emerald-600 font-medium">
-                    {c.id}
-                  </td>
+                  <td className="py-3 text-emerald-700 font-medium">{c.id}</td>
 
                   <td>{c.title}</td>
 
                   <td>{c.category}</td>
 
                   <td>
-                    <span className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-sm">
+                    <span className="bg-emerald-800 text-emerald-400 px-3 py-1 rounded-full text-sm">
                       {c.status}
                     </span>
                   </td>
@@ -246,8 +220,8 @@ const Dashboard = () => {
 
                   <td>
                     <button
-                      onClick={()=>setSelectedComplaint(c)}
-                      className="text-emerald-600 font-medium cursor-pointer"
+                      onClick={() => setSelectedComplaint(c)}
+                      className="text-emerald-500 font-medium cursor-pointer"
                     >
                       View
                     </button>
@@ -255,51 +229,38 @@ const Dashboard = () => {
 
                 </tr>
               ))}
-
             </tbody>
-
           </table>
 
-          <div className="flex justify-between mt-6 text-[#475569] text-sm">
+          <div className="flex justify-between mt-6 text-gray-300 text-sm">
             <span>Total: {complaints.length}</span>
-            <span className="text-emerald-600">
-              Resolved: {resolvedCount}
-            </span>
+            <span className="text-emerald-500">Resolved: {resolvedCount}</span>
           </div>
 
         </div>
 
       </div>
 
-
       {/* Complaint Modal */}
       {selectedComplaint && (
+        <div className="fixed inset-0 bg-emerald-900 bg-opacity-50 flex items-center justify-center">
 
-        <div className="fixed inset-0  bg-emerald-50 bg-opacity-30 flex items-center justify-center ">
+          <div className="border border-emerald-500 bg-[#111] p-10 rounded-xl w-96 shadow-2xl text-white">
 
-          <div className="border border-emerald-500 bg-white p-10 rounded-xl w-96 shadow-2xl">
-
-            <h2 className="text-xl font-bold mb-4">
+            <h2 className="text-xl font-bold mb-4 text-emerald-400">
               Complaint Details
             </h2>
 
             <p><b>Title:</b> {selectedComplaint.title}</p>
-
             <p><b>Category:</b> {selectedComplaint.category}</p>
-
             <p><b>Status:</b> {selectedComplaint.status}</p>
 
-            <p className="mt-3">
-              <b>Description:</b>
-            </p>
-
-            <p className="text-gray-600">
-              {selectedComplaint.description}
-            </p>
+            <p className="mt-3"><b>Description:</b></p>
+            <p className="text-gray-300">{selectedComplaint.description}</p>
 
             <button
-              onClick={()=>setSelectedComplaint(null)}
-              className="mt-4 bg-emerald-500 text-white px-4 py-2 rounded cursor-pointer"
+              onClick={() => setSelectedComplaint(null)}
+              className="mt-4 bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded cursor-pointer"
             >
               Close
             </button>
@@ -307,7 +268,6 @@ const Dashboard = () => {
           </div>
 
         </div>
-
       )}
 
     </div>
