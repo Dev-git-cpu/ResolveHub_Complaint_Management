@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @Data
 public class ComplaintUpdateResponse {
     private Long id;
+    private String name;
     private ComplaintCategory category;
     private String title;
     private String description;

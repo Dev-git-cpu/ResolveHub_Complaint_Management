@@ -1,7 +1,9 @@
-import axios from "axios";
+import axiosInstance from "../../api/axiosInstance";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+
+const API_URL = import.meta.env.VITE_API_URL;
 
 const Dashboard = () => {
 
@@ -23,7 +25,6 @@ const Dashboard = () => {
 
   const userId = localStorage.getItem("userId");
 
-  // FETCH COMPLAINTS
   const fetchComplaints = async () => {
     if (!userId) {
       toast.error("User not logged in");
@@ -32,8 +33,9 @@ const Dashboard = () => {
     }
 
     try {
-      const res = await axios.get(
-        `http://localhost:8080/complaints/user/${userId}`
+      const res = await axiosInstance.get(
+        `${API_URL}/complaints/user/${userId}`,
+        { withCredentials: true }
       );
       setComplaints(res.data);
     } catch (error) {
@@ -54,9 +56,10 @@ const Dashboard = () => {
     }
 
     try {
-      const response = await axios.post(
-        `http://localhost:8080/complaints/${userId}`,
-        { title, category, description }
+      const response = await axiosInstance.post(
+        `${API_URL}/complaints/${userId}`,
+        { title, category, description },
+        { withCredentials: true }
       );
 
       console.log(response.data);

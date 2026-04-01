@@ -1,17 +1,18 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axiosInstance from "../../api/axiosInstance";
 import { toast } from "react-toastify";
+
+const API_URL = import.meta.env.VITE_API_URL;
 
 const AdminUserComplaints = () => {
 
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
 
-  // Fetch users from backend
   const fetchUsers = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/admin/users"); 
+      const response = await axiosInstance.get(`${API_URL}/admin/users`, { withCredentials: true }); 
       setUsers(response.data || []); 
     } catch (error) {
       console.error(error);
@@ -103,7 +104,10 @@ const AdminUserComplaints = () => {
                       {user.role}
                     </span>
                   </td>
-                  <td className="px-6 py-4 text-gray-300">{user.createdAt}</td>
+                  <td className="px-6 py-4 text-gray-300">{new Date(user.createdAt).toLocaleString("en-IN",{
+                    dateStyle:"medium",
+                    timeStyle:"short"
+                  })}</td>
                 </tr>
               ))}
             </tbody>

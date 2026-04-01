@@ -1,7 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axiosInstance from "../../api/axiosInstance";
 import { toast } from "react-toastify";
+
+const API_URL = import.meta.env.VITE_API_URL;
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -17,7 +19,7 @@ const AdminDashboard = () => {
   // Fetch complaints from backend
   const fetchComplaints = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/admin/complaints?page=0&size=100");
+      const response = await axiosInstance.get(`${API_URL}/admin/complaints?page=0&size=100`, { withCredentials: true });
       const complaintList = response.data.content || [];
 
       // Sort descending by ID (latest first)
